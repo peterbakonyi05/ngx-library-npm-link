@@ -23,6 +23,9 @@
       ],
       "ngx-test/*": [
         "dist/ngx-test/*"
+      ],
+      "*": [
+        "node_modules/*"
       ]
     }
   }
