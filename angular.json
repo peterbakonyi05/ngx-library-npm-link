@@ -145,6 +145,46 @@
           }
         }
       }
+    },
+    "ngx-test": {
+      "root": "projects/ngx-test",
+      "sourceRoot": "projects/ngx-test/src",
+      "projectType": "library",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-test/tsconfig.lib.json",
+            "project": "projects/ngx-test/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "project": "projects/ngx-test/ng-package.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-test/src/test.ts",
+            "tsConfig": "projects/ngx-test/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-test/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-test/tsconfig.lib.json",
+              "projects/ngx-test/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ngx-library-npm-link"
