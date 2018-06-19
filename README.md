@@ -1,27 +1,37 @@
 # NgxLibraryNpmLink
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.1.0-rc.0.
+Extra path mapping for all node modules:
+```
+"*": [
+  "node_modules/*"
+]
+```
 
-## Development server
+When having a library (`ngx-test` in this case) and there the above tsconfig path mapping, `npm start` is unable to resolve the library.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Why is the extra mapping required?
+There can be other angular libraries that need to be `npm link`ed during development because they are not in the same repo.
 
-## Code scaffolding
+In that case, the common dependencies (`@angular`, `@ngrx` etc...) need to be resolved from the root `node_modules` folder
+to avoid bundling and resolving the dependencies from different locations.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## How to replicate?
+```
+npm install
+npm run build ngx-test
+npm start
+```
 
-## Build
+`npm start` will result in the following error:
+```
+ERROR in ./src/app/app.module.tsModule not found:
+Error: Can't resolve 'ngx-test' in 'C:\Github\ngx-library-npm-link\src\app'
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## Building with `ngc` works
+When building directly with `ngc`, it works as expected, no error, so it seems to be a webpack problem.
 
-## Running unit tests
+```
+node_modules/.bin/ngc ./src/tsconfig.app.json
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
