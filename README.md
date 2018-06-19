@@ -1,5 +1,7 @@
 # NgxLibraryNpmLink
 
+See `@angular/cli` GitHub issue: https://github.com/angular/angular-cli/issues/11301
+
 Extra path mapping for all node modules:
 ```
 "*": [
